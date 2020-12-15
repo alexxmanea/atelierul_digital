@@ -4,12 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
+    android:padding="15dp"
     tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/edittext_height"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="State your height" />
 
     <Button
         android:id="@+id/navigate"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Take me to New Activity" />
+        android:text="Am I tall enough?" />
 
 </LinearLayout>

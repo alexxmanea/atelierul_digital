@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         deserts.add("Pie");
 
         Spinner spinner = findViewById(R.id.spinner);
-        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Deserts, android.R.layout.simple_spinner_item);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deserts) {
             // from Stack Overflow - hide the first dummy entry
             @Override

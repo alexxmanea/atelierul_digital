@@ -13,7 +13,12 @@ public class NewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_activity);
 
-        Log.i("Lifecycle", "onCreate");
+        String logInfo = null;
+        if (getIntent().getExtras() != null) {
+                logInfo = getIntent().getStringExtra("SomeInfo");
+        }
+
+        Log.i("Lifecycle", "onCreate -> " + logInfo);
     }
 
     @Override

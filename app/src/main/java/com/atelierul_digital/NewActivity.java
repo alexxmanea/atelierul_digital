@@ -13,42 +13,42 @@ public class NewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_activity);
 
-        Log.i("Licecycle", "onCreate");
+        Log.i("Lifecycle", "onCreate");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i("Licecycle", "onStart");
+        Log.i("Lifecycle", "onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("Licecycle", "onResume");
+        Log.i("Lifecycle", "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i("Licecycle", "onPause");
+        Log.i("Lifecycle", "onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i("Licecycle", "onStop");
+        Log.i("Lifecycle", "onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i("Licecycle", "onDestroy");
+        Log.i("Lifecycle", "onDestroy");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.i("Licecycle", "onRestart");
+        Log.i("Lifecycle", "onRestart");
     }
 }

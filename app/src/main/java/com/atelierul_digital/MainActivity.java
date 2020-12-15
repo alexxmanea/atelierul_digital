@@ -1,59 +1,74 @@
 package com.atelierul_digital;
 
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FrameLayout layout_1 = findViewById(R.id.layout_1);
-        FrameLayout layout_2 = findViewById(R.id.layout_2);
-        FrameLayout layout_3 = findViewById(R.id.layout_3);
+        List<String> deserts = new ArrayList<String>();
+        deserts.add("");
+        deserts.add("Cupcake");
+        deserts.add("Donut");
+        deserts.add("Eclair");
+        deserts.add("KitKat");
+        deserts.add("Pie");
 
-        final int[] width = new int[1];
-        final int[] height = new int[1];
-
-        ViewTreeObserver vto = layout_1.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        Spinner spinner = findViewById(R.id.spinner);
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Deserts, android.R.layout.simple_spinner_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, deserts) {
+            // from Stack Overflow - hide the first dummy entry
             @Override
-            public void onGlobalLayout() {
-                layout_1.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View v = null;
 
-                width[0] = layout_1.getMeasuredWidth();
-                height[0] = layout_1.getMeasuredHeight();
+                // If this is the initial dummy entry, make it hidden
+                if (position == 0) {
+                    TextView tv = new TextView(getContext());
+                    tv.setHeight(0);
+                    tv.setVisibility(View.GONE);
+                    v = tv;
+                } else {
+                    // Pass convertView as null to prevent reuse of special case views
+                    v = super.getDropDownView(position, null, parent);
+                }
+
+                // Hide scroll bar because it appears sometimes unnecessarily, this does not prevent scrolling
+                parent.setVerticalScrollBarEnabled(false);
+                return v;
             }
-        });
+        };
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+    }
 
-        layout_2.post(new Runnable() {
-            @Override
-            public void run() {
-                int width2 = width[0] - (height[0] / 2 - height[0] / 3);
-                int height2 = height[0] / 2;
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (!parent.getItemAtPosition(position).toString().equals("")) {
+            String text = "Selected: " + parent.getItemAtPosition(position).toString();
+            Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+        }
+    }
 
-                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width2, height2);
-                layoutParams.gravity = Gravity.CENTER;
-                layout_2.setLayoutParams(layoutParams);
-            }
-        });
-
-        layout_3.post(new Runnable() {
-            @Override
-            public void run() {
-                int width3 = width[0] - 2 * (height[0] / 2 - height[0] / 3);
-                int height3 = height[0] / 3;
-
-                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(width3, height3);
-                layoutParams.gravity = Gravity.CENTER;
-                layout_3.setLayoutParams(layoutParams);
-            }
-        });
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
     }
 }

@@ -3,36 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
-    android:padding="12dp"
-    android:weightSum="3"
+    android:padding="25dp"
     tools:context=".MainActivity">
 
-    <FrameLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Spinner: Example"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"/>
+
+    <Spinner
+        android:id="@+id/spinner"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5">
-
-        <FrameLayout
-            android:id="@+id/layout_1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#9b2fae"
-            android:orientation="horizontal" />
-
-        <FrameLayout
-            android:id="@+id/layout_2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="#7ccbc5"
-            android:orientation="horizontal" />
-
-        <FrameLayout
-            android:id="@+id/layout_3"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="#fbc962"
-            android:orientation="horizontal" />
-    </FrameLayout>
+        android:layout_height="wrap_content"/>
 </LinearLayout>

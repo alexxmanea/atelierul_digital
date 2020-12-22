@@ -26,6 +26,9 @@ public class SecondFragment extends Fragment {
     private void evaluateAnalyzeState() {
         analyze_button.setEnabled(height != null);
         analyze_height_textview.setVisibility((height != null) ? View.VISIBLE : View.INVISIBLE);
+        if (height == null) {
+            ((Listener) getActivity()).clearEditText();
+        }
     }
 
     @Nullable

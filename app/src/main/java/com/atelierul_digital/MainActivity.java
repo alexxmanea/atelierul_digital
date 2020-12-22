@@ -11,13 +11,23 @@ public class MainActivity extends AppCompatActivity implements Listener {
         setContentView(R.layout.activity_main);
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.second_frame, new SecondFragment(), "tag")
+                .add(R.id.main_frame, new MainFragment(), "main")
+                .commit();
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.second_frame, new SecondFragment(), "second")
                 .commit();
     }
 
     @Override
     public void analyze(String height) {
-        SecondFragment secondFragment = (SecondFragment) getSupportFragmentManager().findFragmentByTag("tag");
+        SecondFragment secondFragment = (SecondFragment) getSupportFragmentManager().findFragmentByTag("second");
         secondFragment.setHeight(height);
+    }
+
+    @Override
+    public void clearEditText() {
+        MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentByTag("main");
+        mainFragment.clearEditText();
     }
 }

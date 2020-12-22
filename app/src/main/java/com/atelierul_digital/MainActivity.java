@@ -12,9 +12,6 @@ public class MainActivity extends AppCompatActivity implements Listener {
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.main_frame, new MainFragment(), "main")
-                .commit();
-
-        getSupportFragmentManager().beginTransaction()
                 .add(R.id.second_frame, new SecondFragment(), "second")
                 .commit();
     }

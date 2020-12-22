@@ -1,6 +1,5 @@
 package com.atelierul_digital;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,8 +53,6 @@ public class SecondFragment extends Fragment {
 
                 String isEnough = (heightInCm >= 185) ? "YES" : "NO";
 
-                Intent intent = new Intent();
-                intent.putExtra("height_result", isEnough);
                 Toast.makeText(getActivity(), "Was my height enough? - " + isEnough, Toast.LENGTH_SHORT).show();
                 setHeight(null);
             } catch (NumberFormatException e) {

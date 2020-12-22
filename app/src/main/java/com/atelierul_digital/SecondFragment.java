@@ -14,24 +14,25 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class SecondFragment extends Fragment {
-    private String height = null;
     private Button analyze_button;
-    TextView analyze_height_textview;
+    private TextView analyze_height_textview;
+    private String height;
 
     public void setHeight(String height) {
         this.height = height;
-        evaluateAnalyzeState();
         analyze_height_textview.setText(height + " cm");
+        evaluateAnalyzeState();
     }
 
     private void evaluateAnalyzeState() {
         analyze_button.setEnabled(height != null);
+        analyze_height_textview.setVisibility((height != null) ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.new_activity, container, false);
+        return inflater.inflate(R.layout.second_fragment, container, false);
     }
 
     @Override
@@ -39,9 +40,9 @@ public class SecondFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         analyze_button = view.findViewById(R.id.analyze_button);
-        evaluateAnalyzeState();
-
         analyze_height_textview = view.findViewById(R.id.analyze_height_textview);
+
+        setHeight(null);
 
         analyze_button.setOnClickListener(v -> {
             try {
@@ -56,11 +57,11 @@ public class SecondFragment extends Fragment {
                 Intent intent = new Intent();
                 intent.putExtra("height_result", isEnough);
                 Toast.makeText(getActivity(), "Was my height enough? - " + isEnough, Toast.LENGTH_SHORT).show();
+                setHeight(null);
             } catch (NumberFormatException e) {
                 Toast.makeText(getActivity(), "Invalid height", Toast.LENGTH_SHORT).show();
             } finally {
-                height = null;
-                evaluateAnalyzeState();
+                setHeight(null);
             }
         });
     }

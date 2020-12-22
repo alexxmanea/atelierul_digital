@@ -3,11 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     android:padding="15dp"
-    tools:context=".MainActivity"
-    android:layout_gravity="center">
+    tools:context=".MainActivity">
 
     <EditText
         android:id="@+id/edittext_height"
@@ -16,9 +14,8 @@
         android:hint="State your height" />
 
     <Button
-        android:id="@+id/navigate"
+        android:id="@+id/button_navigate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Am I tall enough?" />
-
 </LinearLayout>

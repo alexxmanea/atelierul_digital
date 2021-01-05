@@ -10,14 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecycleViewHolder> {
-    private final List<Name> data;
-
-    public RecyclerViewAdapter(List<Name> data) {
-        this.data = data;
-    }
+    private List<Person> data = new ArrayList<>();
 
     @NonNull
     @Override
@@ -29,13 +26,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RecycleViewHolder recycleViewHolder, int position) {
-        String firstName = data.get(position).getFirstName();
-        String lastName = data.get(position).getLastName();
+        StringBuilder allData = new StringBuilder();
+        allData.append(data.get(position).getName());
+        allData.append(" ");
+        allData.append(data.get(position).getSurname());
+        allData.append("\n");
+        allData.append(data.get(position).getAddress());
 
-        recycleViewHolder.firstName_textView.setText(firstName);
-        recycleViewHolder.lastName_textView.setText(lastName);
+        recycleViewHolder.dataTextView.setText(allData.toString());
 
-        if(Integer.parseInt(firstName.substring(firstName.length() - 1)) % 2 == 0) {
+        if (position % 2 == 0) {
             recycleViewHolder.linearLayout.setBackgroundColor(Color.parseColor("#fafafa"));
         }
     }
@@ -45,15 +45,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return data.size();
     }
 
+    public void setData(List<Person> personList) {
+        data.clear();
+        data.addAll(personList);
+
+        notifyDataSetChanged();
+    }
+
     public static class RecycleViewHolder extends RecyclerView.ViewHolder {
-        final TextView firstName_textView;
-        final TextView lastName_textView;
+        final TextView dataTextView;
         final LinearLayout linearLayout;
 
         public RecycleViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.firstName_textView = itemView.findViewById(R.id.firstName);
-            this.lastName_textView = itemView.findViewById(R.id.lastName);
+            this.dataTextView = itemView.findViewById(R.id.dataTextView);
             this.linearLayout = itemView.findViewById(R.id.linearLayout);
         }
     }

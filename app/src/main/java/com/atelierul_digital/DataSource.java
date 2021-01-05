@@ -1,34 +1,45 @@
 package com.atelierul_digital;
 
-import java.util.ArrayList;
+import android.util.Log;
+
 import java.util.List;
 
-class Name {
-    private String firstName;
-    private String lastName;
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public Name(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-}
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DataSource {
-    public List<Name> getNames() {
-        List<Name> names = new ArrayList<>();
+    private static Retrofit retrofit;
 
-        for (int i = 0; i < 200; ++i) {
-            names.add(new Name("FirstName " + i, "LastName " + i));
+    public static Retrofit getRetrofit() {
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl("https://raw.githubusercontent.com")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
         }
 
-        return names;
+        return retrofit;
+    }
+
+    public void getPersons(PersonListener listener) {
+        GithubAPI githubAPI = getRetrofit().create(GithubAPI.class);
+        githubAPI.getPersons()
+                .enqueue(new Callback<List<Person>>() {
+                    @Override
+                    public void onResponse(Call<List<Person>> call, Response<List<Person>> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("tag", "response was successful");
+                            listener.onPersonsFetchedFromServer(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Person>> call, Throwable t) {
+
+                    }
+                });
     }
 }

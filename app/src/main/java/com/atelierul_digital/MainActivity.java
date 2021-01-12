@@ -24,12 +24,17 @@ public class MainActivity extends AppCompatActivity implements PersonListener {
         recyclerViewAdapter = new RecyclerViewAdapter();
         recyclerView.setAdapter(recyclerViewAdapter);
 
-        DataSource dataSource = new DataSource();
+        DataSource dataSource = new DataSource(this);
         dataSource.getPersons(this);
     }
 
     @Override
     public void onPersonsFetchedFromServer(List<Person> personList) {
-        recyclerViewAdapter.setData(personList);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                recyclerViewAdapter.setData(personList);
+            }
+        });
     }
 }

@@ -5,4 +5,6 @@
     <color name="grey">#212121</color>
     <color name="grey_2nd">#303030</color>
     <color name="grey_3rd">#424242</color>
+    <color name="google">#DD4B39</color>
+    <color name="facebook">#3A5898</color>
 </resources>

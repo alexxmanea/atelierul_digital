@@ -4,17 +4,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <TextView
-        android:fontFamily="@font/robotomediumitalic"
-        android:textSize="40sp"
+        android:fontFamily="@font/robotomedium"
+        android:id="@+id/login_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="Login"
+        android:textSize="40sp"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/email_edittext"
+        app:layout_constraintLeft_toLeftOf="@id/password_edittext"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_edittext"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:layout_weight="1"
+        android:hint="Email"
+        android:textColorHint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/password_edittext"
+        app:layout_constraintTop_toBottomOf="@+id/login_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password_edittext"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:hint="Password"
+        android:textColorHint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/forgotPassword_text"
+        app:layout_constraintTop_toBottomOf="@id/email_edittext">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:textColor="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/forgotPassword_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/robotoregular"
+        android:text="FORGOT YOUR PASSWORD?"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toBottomOf="@id/password_edittext"
+        android:clickable="true"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "110463273663",
+    "project_id": "pet-sitter-app",
+    "storage_bucket": "pet-sitter-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110463273663:android:04282c3b86e0ea5de4540a",
+        "android_client_info": {
+          "package_name": "com.atelierul_digital"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110463273663-vmn3q9r7cjstp5n4ti684lr7j7phvfe2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACPkaamXKHntkx52mCuPPMhyoH0KsSwgI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110463273663-vmn3q9r7cjstp5n4ti684lr7j7phvfe2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

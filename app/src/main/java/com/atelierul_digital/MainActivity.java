@@ -29,12 +29,15 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int CHOOSE_IMAGE = 101;
     private FirebaseAuth mAuth;
     private DatabaseReference usersDatabase;
     private Button logout_button;
     private Button chooseimage_button;
     private ImageView display_image;
     private TextView uid;
+    private Bitmap bitmap;
+    private Uri profileImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,10 +103,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private Bitmap bitmap;
-    private static final int CHOOSE_IMAGE = 101;
-    private Uri profileImage;
-
     private void showImageChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -119,9 +118,10 @@ public class MainActivity extends AppCompatActivity {
                 data.getData() != null) {
             profileImage = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), profileImage);
+                Bitmap bitmap =
+                        MediaStore.Images.Media.getBitmap(getContentResolver(), profileImage);
                 display_image.setImageBitmap(bitmap);
-                
+
                 uploadImage();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -131,7 +131,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void uploadImage() {
         StorageReference storageRef =
-                FirebaseStorage.getInstance().getReference("profile_pictures/" + mAuth.getCurrentUser().getUid().toString() + ".jpg");
+                FirebaseStorage.getInstance().getReference(
+                        "profile_pictures/" + mAuth.getCurrentUser().getUid() + ".jpg");
 
         if (profileImage != null) {
             storageRef.putFile(profileImage).addOnCompleteListener(

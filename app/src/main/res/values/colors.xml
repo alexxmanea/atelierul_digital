@@ -7,4 +7,6 @@
     <color name="grey_3rd">#424242</color>
     <color name="google">#DD4B39</color>
     <color name="facebook">#3A5898</color>
+    <color name="logout">#8A0303</color>
+    <color name="error">#FF0023</color>
 </resources>

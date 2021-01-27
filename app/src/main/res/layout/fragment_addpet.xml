@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    tools:context=".AddPetFragment">
+
+    <TextView
+        android:id="@+id/additional_view"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/pet_image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_below="@id/additional_view"
+        android:layout_marginLeft="40dp"
+        android:clickable="true"
+        android:src="@drawable/defautpetprofilepicture_inverted_icon"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="1dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_alignBottom="@id/pet_image"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/pet_image"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/welcome_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:fontFamily="@font/robotomediumitalic"
+            android:text="Welcome, Pet!"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/petFields_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pet_image"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="15dp"
+        android:orientation="vertical"
+        android:weightSum="5">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/petName_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/robotoregular"
+            android:hint="Name"
+            android:textColorHint="@color/white">
+
+            <EditText
+                android:id="@+id/petName_editText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/name_icon_inverted_24dp"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/robotoregular"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                app:errorEnabled="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/petType_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/robotoregular"
+            android:hint="Type"
+            android:textColorHint="@color/white"
+            app:endIconMode="none">
+
+            <AutoCompleteTextView
+                android:id="@+id/petType_editText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:completionThreshold="0"
+                android:drawableStart="@drawable/mypets_icon_24dp"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/robotoregular"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingStart="13dp"
+                android:textColor="@color/white"
+                app:errorEnabled="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/petAge_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/robotoregular"
+            android:hint="Age"
+            android:textColorHint="@color/white">
+
+            <EditText
+                android:id="@+id/petAge_editText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/age_icon_inverted_24dp"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/robotoregular"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                app:errorEnabled="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/petGender_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/robotoregular"
+            android:hint="Gender"
+            android:textColorHint="@color/white"
+            app:endIconMode="none">
+
+            <AutoCompleteTextView
+                android:id="@+id/petGender_editText"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:completionThreshold="0"
+                android:drawableStart="@drawable/gender_icon_inverted_24dp"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/robotoregular"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingStart="13dp"
+                android:textColor="@color/white"
+                app:errorEnabled="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/petDescription_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/robotoregular"
+            android:hint="Description"
+            android:textColorHint="@color/white">
+
+            <EditText
+                android:id="@+id/petDescription_editText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/description_icon_inverted_24dp"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/robotoregular"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                app:errorEnabled="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addYourPet_button"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/petFields_layout"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/robotoblack"
+        android:text="ADD YOUR PET"
+        android:textColor="@color/white"
+        app:cornerRadius="4dp"
+        app:strokeColor="@color/white" />
+
+    <ProgressBar
+        android:id="@+id/loading_progressBar_addPet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addYourPet_button"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="8dp"
+        android:visibility="gone" />
+</RelativeLayout>

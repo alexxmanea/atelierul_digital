@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Pet Sitter</string>
 
-    <string-array name="Cities">
+    <string-array name="cityNames">
         <item>Abrud</item>
         <item>Adjud</item>
         <item>Agnita</item>
@@ -322,4 +322,33 @@
         <item>Zimnicea</item>
         <item>Zlatna</item>
     </string-array>
+
+    <string-array name="petTypes">
+        <item>Dog</item>
+        <item>Cat</item>
+        <item>Bird</item>
+        <item>Fish</item>
+        <item>Lizard/Reptile</item>
+        <item>Small Mammal</item>
+        <item>Horse</item>
+        <item>Farm Animal</item>
+        <item>Exotic Pet</item>
+    </string-array>
+
+    <string-array name="jobTypes">
+        <item>Pet sitting</item>
+        <item>Pet walking</item>
+        <item>Pet feeding</item>
+        <item>Overnight care</item>
+    </string-array>
+
+    <string-array name="genders">
+        <item>Female</item>
+        <item>Male</item>
+        <item>I prefer not to say</item>
+    </string-array>
+
+    <integer name="minimumSalary">13</integer>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

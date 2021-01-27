@@ -1,0 +1,47 @@
+login with google
+login with facebook
+
+verificare email
+uitare parola / schimbare parola
+
+adauga anunt
+cauta anunturi
+filtre anunturi
+
+my jobs (anunturi utilizator), past / active
+review-uri pe profilul fiecarui utilizator in functie de jobs done
+
+-type: pet walking, pet sitting, overnight care, pet feeding
+-salary per hour - Must be at least $10.4/hr (New York’s minimum wage) (minimum x Romanian minimum wage)
+-select pets you want to be taken care of
+-Describe what services you need & who you're looking to hire
+-price negotiable or not
+-available or not
+-edit job
+job id unique
+
+mesaje: buton in anunt cu trimite mesaj
+in inbox o sa ai toate conversatiile
+
+
+
+stergere pet cu swipe recyclerview (anca)
+
+login with google/facebook + asignare automata parola + get nume prenume + iconita ca nu si-a completat profilul
+
+preluare nume orase de pe github json
+
+Authentication -> Templates => email verification, password reset
+
+FirebaseUser user = mAuth.getCurrentUser();
+
+    if(user != null) {
+        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(MainActivity.this, "Email sent", Toast.LENGTH_SHORT).show();
+                }
+            }
+        })
+    }

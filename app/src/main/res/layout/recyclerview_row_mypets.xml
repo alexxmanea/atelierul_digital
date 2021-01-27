@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/grey"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/petDetails_row_cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:backgroundTint="@color/grey_3rd"
+        android:clickable="false"
+        android:focusable="false"
+        app:cardBackgroundColor="@color/grey_2nd"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="3dp"
+        app:contentPadding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:clickable="false"
+                android:focusable="false">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/pet_row_image"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:src="@drawable/defautpetprofilepicture_inverted_icon"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="1dp" />
+
+                <TextView
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/petName_row_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:fontFamily="@font/robotoregular"
+                    android:hint="Name"
+                    android:textColorHint="@color/white">
+
+                    <EditText
+                        android:id="@+id/petName_row_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="false"
+                        android:drawableStart="@drawable/name_icon_inverted_24dp"
+                        android:drawablePadding="10dp"
+                        android:focusable="false"
+                        android:fontFamily="@font/robotoregular"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/white"
+                        app:errorEnabled="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/petType_row_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
+                android:fontFamily="@font/robotoregular"
+                android:hint="Type"
+                android:textColorHint="@color/white"
+                app:endIconMode="none">
+
+                <AutoCompleteTextView
+                    android:id="@+id/petType_row_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:completionThreshold="0"
+                    android:drawableStart="@drawable/mypets_icon_24dp"
+                    android:drawablePadding="10dp"
+                    android:focusable="false"
+                    android:fontFamily="@font/robotoregular"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingStart="13dp"
+                    android:textColor="@color/white"
+                    app:errorEnabled="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/petAge_row_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
+                android:fontFamily="@font/robotoregular"
+                android:hint="Age"
+                android:textColorHint="@color/white">
+
+                <EditText
+                    android:id="@+id/petAge_row_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="false"
+                    android:drawableStart="@drawable/age_icon_inverted_24dp"
+                    android:drawablePadding="10dp"
+                    android:focusable="false"
+                    android:fontFamily="@font/robotoregular"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    app:errorEnabled="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/petGender_row_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
+                android:fontFamily="@font/robotoregular"
+                android:hint="Gender"
+                android:textColorHint="@color/white"
+                app:endIconMode="none">
+
+                <AutoCompleteTextView
+                    android:id="@+id/petGender_row_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:clickable="false"
+                    android:completionThreshold="0"
+                    android:drawableStart="@drawable/gender_icon_inverted_24dp"
+                    android:drawablePadding="10dp"
+                    android:focusable="false"
+                    android:fontFamily="@font/robotoregular"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingStart="13dp"
+                    android:textColor="@color/white"
+                    app:errorEnabled="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/petDescription_row_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
+                android:fontFamily="@font/robotoregular"
+                android:hint="Description"
+                android:textColorHint="@color/white">
+
+                <EditText
+                    android:id="@+id/petDescription_row_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="false"
+                    android:drawableStart="@drawable/description_icon_inverted_24dp"
+                    android:drawablePadding="10dp"
+                    android:focusable="false"
+                    android:fontFamily="@font/robotoregular"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    app:errorEnabled="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

@@ -58,6 +58,7 @@
                     android:layout_height="0dp"
                     android:layout_marginBottom="4dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/robotoregular"
                     android:hint="Email"
                     android:textColorHint="@color/white"
                     app:errorEnabled="true">
@@ -68,6 +69,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/email_icon_inverted_24dp"
                         android:drawablePadding="10dp"
+                        android:fontFamily="@font/robotoregular"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:textColor="@color/white" />
@@ -80,6 +82,7 @@
                     android:layout_height="0dp"
                     android:layout_marginBottom="4dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/robotoregular"
                     android:hint="Password"
                     android:textColorHint="@color/white"
                     app:passwordToggleEnabled="true">
@@ -90,6 +93,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/password_icon_inverted_24dp"
                         android:drawablePadding="10dp"
+                        android:fontFamily="@font/robotoregular"
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:textColor="@color/white" />
@@ -102,6 +106,7 @@
                     android:layout_height="0dp"
                     android:layout_marginBottom="4dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/robotoregular"
                     android:hint="First Name"
                     android:textColorHint="@color/white">
 
@@ -111,6 +116,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/name_icon_inverted_24dp"
                         android:drawablePadding="10dp"
+                        android:fontFamily="@font/robotoregular"
                         android:inputType="textPersonName"
                         android:maxLines="1"
                         android:textColor="@color/white" />
@@ -123,6 +129,7 @@
                     android:layout_height="0dp"
                     android:layout_marginBottom="4dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/robotoregular"
                     android:hint="Last Name"
                     android:textColorHint="@color/white">
 
@@ -132,6 +139,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/name_icon_inverted_24dp"
                         android:drawablePadding="10dp"
+                        android:fontFamily="@font/robotoregular"
                         android:inputType="textPersonName"
                         android:maxLines="1"
                         android:textColor="@color/white" />
@@ -144,6 +152,7 @@
                     android:layout_height="0dp"
                     android:layout_marginBottom="4dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/robotoregular"
                     android:hint="City"
                     android:textColorHint="@color/white"
                     app:endIconMode="none"
@@ -155,6 +164,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/location_icon_inverted_24dp"
                         android:drawablePadding="10dp"
+                        android:fontFamily="@font/robotoregular"
                         android:inputType="text"
                         android:maxLines="1"
                         android:textColor="@color/white" />
@@ -166,6 +176,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/robotoregular"
                     android:hint="Phone Number"
                     android:textColorHint="@color/white">
 
@@ -175,6 +186,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/phone_icon_inverted_24dp"
                         android:drawablePadding="10dp"
+                        android:fontFamily="@font/robotoregular"
                         android:inputType="phone"
                         android:maxLines="1"
                         android:textColor="@color/white" />

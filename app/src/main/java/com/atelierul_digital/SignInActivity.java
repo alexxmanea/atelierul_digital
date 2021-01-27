@@ -153,13 +153,13 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Signed In successful",
-                                    Toast.LENGTH_SHORT).show();
+                                    Toast.LENGTH_LONG).show();
 
                             startMainActivity();
                         } else {
                             Toast.makeText(getApplicationContext(),
                                     task.getException().getMessage(),
-                                    Toast.LENGTH_SHORT)
+                                    Toast.LENGTH_LONG)
                                     .show();
                         }
                     }

@@ -57,6 +57,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return validator.isValid(email);
     }
 
+    public static boolean isValidfirstName(String firstName) {
+        return firstName.matches("([A-Z][a-z]+)+([ -]([A-Z][a-z]+))*");
+    }
+
+    public static boolean isValidLastName(String lastName) {
+        return lastName.matches("[A-Z][a-z]+");
+    }
+
+    public static boolean isValidPhoneNumber(String phoneNumber) {
+        return phoneNumber.matches("^(\\+4|)?(07[0-8]{1}[0-9]{1}|02[0-9]{2}|03[0-9]{2}){1}?" +
+                "(\\s|\\.|\\-)?([0-9]{3}(\\s|\\.|\\-|)){2}$");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         register_button.setOnClickListener(this);
         alreadyRegistered_text.setOnClickListener(this);
 
-        String[] cities = getResources().getStringArray(R.array.Cities);
+        String[] cities = getResources().getStringArray(R.array.cityNames);
         ArrayAdapter<String>
                 adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item,
                 cities);
@@ -253,9 +266,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                     "Registration successful. " +
                                             "Please Sign In.", Toast.LENGTH_LONG).show();
 
-                            User user = new User(email, firstName, lastName, city, phoneNumber);
+                            String id = mAuth.getCurrentUser().getUid();
+                            User user = new User(id, email, firstName, lastName, city, phoneNumber);
                             usersDatabase
-                                    .child(mAuth.getCurrentUser().getUid())
+                                    .child(id)
                                     .setValue(user).addOnCompleteListener(
                                     new OnCompleteListener<Void>() {
                                         @Override
@@ -266,7 +280,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                                                 Toast.makeText(getApplicationContext(),
                                                         task.getException().getMessage(),
-                                                        Toast.LENGTH_SHORT)
+                                                        Toast.LENGTH_LONG)
                                                         .show();
                                             } else {
                                                 startSignInActivity();
@@ -282,7 +296,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             } else {
                                 Toast.makeText(getApplicationContext(),
                                         task.getException().getMessage(),
-                                        Toast.LENGTH_SHORT)
+                                        Toast.LENGTH_LONG)
                                         .show();
                             }
                         }
@@ -319,7 +333,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 password.contains("+") || password.contains("/") || password.contains(":") ||
                 password.contains(".") || password.contains(",") || password.contains("<") ||
                 password.contains(">") || password.contains("?") || password.contains("|"))) {
-            Toast.makeText(this, "ajunge", Toast.LENGTH_SHORT).show();
             return passwordErrorMessage(4);
         }
         if (true) {
@@ -370,19 +383,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 return ("Should contain at least 1 lowercase letter (a-z)");
         }
         return ("");
-    }
-
-    private boolean isValidfirstName(String firstName) {
-        return firstName.matches("([A-Z][a-z]+)+([ -]([A-Z][a-z]+))*");
-    }
-
-    private boolean isValidLastName(String lastName) {
-        return lastName.matches("[A-Z][a-z]+");
-    }
-
-    private boolean isValidPhoneNumber(String phoneNumber) {
-        return phoneNumber.matches("^(\\+4|)?(07[0-8]{1}[0-9]{1}|02[0-9]{2}|03[0-9]{2}){1}?" +
-                "(\\s|\\.|\\-)?([0-9]{3}(\\s|\\.|\\-|)){2}$");
     }
 
     private void startSignInActivity() {

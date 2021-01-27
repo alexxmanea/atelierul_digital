@@ -101,6 +101,7 @@
                     android:layout_height="0dp"
                     android:layout_marginBottom="8dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/robotoregular"
                     android:hint="Email"
                     android:textColorHint="@color/white"
                     app:errorEnabled="true">
@@ -111,6 +112,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/email_icon_inverted_24dp"
                         android:drawablePadding="10dp"
+                        android:fontFamily="@font/robotoregular"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:textColor="@color/white" />
@@ -122,6 +124,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/robotoregular"
                     android:hint="Password"
                     android:textColorHint="@color/white"
                     app:passwordToggleEnabled="true">
@@ -132,6 +135,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/password_icon_inverted_24dp"
                         android:drawablePadding="10dp"
+                        android:fontFamily="@font/robotoregular"
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:textColor="@color/white" />

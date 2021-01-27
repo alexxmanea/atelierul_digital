@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigate_myPets"
+        android:icon="@drawable/mypets_icon_24dp"
+        android:title="My Pets" />
+
+    <item
+        android:id="@+id/navigate_myJobs"
+        android:icon="@drawable/myjobs_icon_24dp"
+        android:title="My Jobs" />
+
+    <item
+        android:id="@+id/navigate_jobs"
+        android:icon="@drawable/jobs_icon_24dp"
+        android:title="Jobs" />
+
+    <item
+        android:id="@+id/navigate_addJob"
+        android:icon="@drawable/addjob_icon_24dp"
+        android:title="Add Job" />
+
+    <item
+        android:id="@+id/navigate_messages"
+        android:icon="@drawable/messages_icon_24dp"
+        android:title="Messages" />
+</menu>

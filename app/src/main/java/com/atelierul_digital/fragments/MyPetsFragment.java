@@ -1,4 +1,4 @@
-package com.atelierul_digital;
+package com.atelierul_digital.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,8 +14,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.atelierul_digital.PetsRecyclerViewAdapter;
+import com.atelierul_digital.R;
+import com.atelierul_digital.activities.MainActivity;
+import com.atelierul_digital.entities.Pet;
+import com.atelierul_digital.entities.User;
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,31 +28,31 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MyPetsFragment extends Fragment implements View.OnClickListener {
     private static PetsRecyclerViewAdapter adapter;
     private static User currentUser;
     private static DatabaseReference petsDatabase;
-    private static List<Pet> user_pets;
-    private static RecyclerView recyclerView;
-    private static Context context;
+    private RecyclerView recyclerView;
+    private Context context;
     private MaterialButton addpet_button;
-    private FirebaseAuth mAuth;
-    private DatabaseReference usersDatabase;
     private MaterialButton addMorePets_button;
+    private Fragment addPetFragment;
 
     public static void getPetsData() {
         petsDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                user_pets.clear();
-                user_pets = new ArrayList<>();
+                List<Pet> user_pets = new ArrayList<>();
+
                 for (DataSnapshot petSnapshot : snapshot.getChildren()) {
                     Pet pet = petSnapshot.getValue(Pet.class);
 
-                    if (pet.getOwnerId().equals(currentUser.getUserId())) {
-                        user_pets.add(pet);
-                        System.out.println("AJUNG AICI " + user_pets.size());
+                    if (pet != null) {
+                        if (pet.getOwnerId().equals(currentUser.getUserId())) {
+                            user_pets.add(pet);
+                        }
                     }
                 }
 
@@ -72,15 +76,12 @@ public class MyPetsFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mAuth = FirebaseAuth.getInstance();
-        usersDatabase = FirebaseDatabase.getInstance().getReference("users");
+        context = Objects.requireNonNull(getActivity()).getApplicationContext();
+
         petsDatabase = FirebaseDatabase.getInstance().getReference("pets");
 
-        currentUser = MainActivity.currentUser;
-
-        context = getActivity().getApplicationContext();
-
         View view;
+        currentUser = MainActivity.currentUser;
         if (currentUser.getPetsCount() == 0) {
             view = inflater.inflate(R.layout.fragment_nopets, container, false);
 
@@ -92,18 +93,14 @@ public class MyPetsFragment extends Fragment implements View.OnClickListener {
             addMorePets_button = view.findViewById(R.id.addMorePets_button);
             addMorePets_button.setOnClickListener(this);
 
-            getPetsData();
-
             recyclerView = view.findViewById(R.id.myPets_recyclerView);
             LinearLayoutManager layoutManager =
-                    new LinearLayoutManager(getActivity().getApplicationContext(),
-                            LinearLayoutManager.VERTICAL, false);
+                    new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             recyclerView.setLayoutManager(layoutManager);
-
-            user_pets = new ArrayList<>();
-            adapter = new PetsRecyclerViewAdapter(user_pets);
-
+            adapter = new PetsRecyclerViewAdapter(new ArrayList<>());
             recyclerView.setAdapter(adapter);
+
+            getPetsData();
         }
 
         return view;
@@ -120,10 +117,17 @@ public class MyPetsFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.addpet_button:
             case R.id.addMorePets_button:
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new AddPetFragment())
-                        .addToBackStack(null)
-                        .commit();
+                addPetFragment = new AddPetFragment();
+                MainActivity.fragmentManager.beginTransaction()
+                        .add(R.id.fragment_container, addPetFragment,
+                                "AddPetFragment").hide(addPetFragment)
+                        .commitAllowingStateLoss();
+                MainActivity.fragmentManager.beginTransaction().hide(MainActivity.selectedFragment)
+                        .show(addPetFragment)
+                        .commitAllowingStateLoss();
+                MainActivity.selectedFragment = addPetFragment;
+
+                MainActivity.fragmentsStack.get("MyPetsFragment").add(addPetFragment);
                 break;
         }
     }

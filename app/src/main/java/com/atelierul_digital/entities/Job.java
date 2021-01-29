@@ -1,4 +1,4 @@
-package com.atelierul_digital;
+package com.atelierul_digital.entities;
 
 public class Job {
     private String jobId;

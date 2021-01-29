@@ -1,4 +1,4 @@
-package com.atelierul_digital;
+package com.atelierul_digital.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -16,11 +16,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.atelierul_digital.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
     private Button google_button;
@@ -158,7 +161,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                             startMainActivity();
                         } else {
                             Toast.makeText(getApplicationContext(),
-                                    task.getException().getMessage(),
+                                    Objects.requireNonNull(task.getException()).getMessage(),
                                     Toast.LENGTH_LONG)
                                     .show();
                         }

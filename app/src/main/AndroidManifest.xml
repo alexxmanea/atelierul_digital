@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pet_Sitter">
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".SignInActivity">
+        <activity android:name=".activities.MainActivity"></activity>
+        <activity android:name=".activities.RegisterActivity" />
+        <activity android:name=".activities.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

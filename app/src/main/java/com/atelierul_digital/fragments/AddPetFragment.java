@@ -1,4 +1,4 @@
-package com.atelierul_digital;
+package com.atelierul_digital.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -24,11 +24,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.atelierul_digital.R;
+import com.atelierul_digital.activities.MainActivity;
+import com.atelierul_digital.entities.Pet;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -45,7 +47,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class AddPetFragment extends Fragment implements View.OnClickListener {
     private static final int CHOOSE_IMAGE = 101;
-    private boolean imageChosen;
     private String petId = "";
     private CircleImageView pet_image;
     private TextView welcome_text;
@@ -61,11 +62,11 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
     private EditText petDescription_editText;
     private MaterialButton addYourPet_button;
     private ProgressBar loading_progressBar_addPet;
-    private FirebaseAuth mAuth;
     private DatabaseReference petsDatabase;
     private DatabaseReference usersDatabase;
     private Uri profileImage;
     private Bitmap profileImageBitmap;
+    private boolean imageChosen;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,7 +78,6 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_addpet, container, false);
 
-        mAuth = FirebaseAuth.getInstance();
         petsDatabase = FirebaseDatabase.getInstance().getReference("pets");
         usersDatabase = FirebaseDatabase.getInstance().getReference("users");
 
@@ -122,8 +122,11 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
                 if (petName_editText.hasFocus()) {
                     petName_editText.setError(null);
 
-                    welcome_text.setText(new StringBuilder().append("Welcome, ")
-                            .append(petName_editText.getText().toString()).append("!").toString());
+                    StringBuilder welcomeText = new StringBuilder();
+                    welcomeText.append("Welcome, ");
+                    welcomeText.append(petName_editText.getText().toString());
+                    welcomeText.append("!");
+                    welcome_text.setText(welcomeText.toString());
                 }
             }
 
@@ -300,7 +303,7 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select your profile image"),
+        startActivityForResult(Intent.createChooser(intent, "Select an image with your pet"),
                 CHOOSE_IMAGE);
     }
 
@@ -379,8 +382,6 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
                     }
                 });
 
-        Toast.makeText(getContext(), "Your pet was added successfully", Toast.LENGTH_LONG).show();
-
         MainActivity.currentUser.addPet();
         MyPetsFragment.getPetsData();
 
@@ -390,7 +391,14 @@ public class AddPetFragment extends Fragment implements View.OnClickListener {
 
         loading_progressBar_addPet.setVisibility(View.GONE);
 
-        getActivity().getSupportFragmentManager().popBackStack();
+        Toast.makeText(getContext(), "Your pet was added successfully", Toast.LENGTH_LONG).show();
+
+        Fragment thisFragment = MainActivity.fragmentManager.findFragmentByTag("AddPetFragment");
+        if (thisFragment != null) {
+            MainActivity.fragmentManager.beginTransaction().remove(thisFragment).commitAllowingStateLoss();
+            MainActivity.fragmentsStack.get("MyPetsFragment").pop();
+            MainActivity.showMyPets();
+        }
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.atelierul_digital;
+package com.atelierul_digital.entities;
 
 public class User {
     public static final String DEFAULT_DESCRIPTION = "No description";
@@ -11,10 +11,7 @@ public class User {
     private String city;
     private String phoneNumber;
     private int petsCount;
-    private String[] petsIds;
     private String description;
-    private String[] jobsDone;
-    private String[] reviews;
     private String occupation;
     private String gender;
 
@@ -27,10 +24,7 @@ public class User {
         this.city = city;
         this.phoneNumber = phoneNumber;
         this.petsCount = 0;
-        this.petsIds = null;
         this.description = DEFAULT_DESCRIPTION;
-        this.jobsDone = null;
-        this.reviews = null;
         this.occupation = DEFAULT_OCCUPATION;
         this.gender = DEFAULT_GENDER;
     }
@@ -71,36 +65,12 @@ public class User {
         this.petsCount = petsCount;
     }
 
-    public String[] getPetsIds() {
-        return petsIds;
-    }
-
-    public void setPetsIds(String[] petsIds) {
-        this.petsIds = petsIds;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String[] getJobsDone() {
-        return jobsDone;
-    }
-
-    public void setJobsDone(String[] jobsDone) {
-        this.jobsDone = jobsDone;
-    }
-
-    public String[] getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(String[] reviews) {
-        this.reviews = reviews;
     }
 
     public String getEmail() {

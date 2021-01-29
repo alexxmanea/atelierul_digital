@@ -1,4 +1,4 @@
-package com.atelierul_digital;
+package com.atelierul_digital.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -26,7 +26,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import com.atelierul_digital.R;
+import com.atelierul_digital.entities.User;
+import com.atelierul_digital.fragments.AddJobFragment;
+import com.atelierul_digital.fragments.AddPetFragment;
+import com.atelierul_digital.fragments.JobsFragment;
+import com.atelierul_digital.fragments.MessagesFragment;
+import com.atelierul_digital.fragments.MyJobsFragment;
+import com.atelierul_digital.fragments.MyPetsFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,13 +55,20 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Stack;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int CHOOSE_IMAGE = 101;
     public static User currentUser;
-    FirebaseUser firebaseUser;
+    public static FirebaseAuth mAuth;
+    public static DatabaseReference usersDatabase;
+    public static Fragment selectedFragment;
+    private FirebaseUser firebaseUser;
     private BottomNavigationView.OnNavigationItemSelectedListener navigationListener;
     private BottomNavigationView bottomNavigationView;
     private CircleImageView profile_image;
@@ -94,11 +110,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MaterialButton change_profile_picture_button;
     private MaterialButton reviews_button;
     private MaterialButton signout_button;
-    private FirebaseAuth mAuth;
-    private DatabaseReference usersDatabase;
     private boolean userNeedsUpdate = false;
     private Uri profileImage;
     private Bitmap profileImageBitmap;
+    public static HashMap<String, Fragment> bottomNavigationFragments;
+    public static FragmentManager fragmentManager;
+    public static HashMap<String, Stack<Fragment>> fragmentsStack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,36 +192,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment selectedFragment = null;
-
+                Fragment fragment;
                 switch (item.getItemId()) {
-                    case R.id.navigate_myPets:
-                        selectedFragment = new MyPetsFragment();
-                        item.setCheckable(true);
-                        break;
-                    case R.id.navigate_myJobs:
-                        selectedFragment = new MyJobsFragment();
-                        break;
-                    case R.id.navigate_jobs:
-                        selectedFragment = new JobsFragment();
-                        break;
-                    case R.id.navigate_addJob:
-                        selectedFragment = new AddJobFragment();
-                        break;
-                    case R.id.navigate_messages:
-                        selectedFragment = new MessagesFragment();
-                        break;
                     default:
-                        selectedFragment = new MyPetsFragment();
-                        break;
+                    case R.id.navigate_myPets:
+                        item.setCheckable(true);
+                        showMyPets();
+                        return true;
+                    case R.id.navigate_myJobs:
+                        System.out.println("1: " + bottomNavigationFragments.size());
+                        System.out.println("2: " + fragmentManager.getFragments().size());
+                        fragment = bottomNavigationFragments.get("MyJobsFragment");
+                        System.out.println("fragment: " + (fragment == null));
+                        fragmentManager.beginTransaction().hide(selectedFragment).show(fragment)
+                                .commitAllowingStateLoss();
+                        selectedFragment = fragment;
+                        System.out.println("selectedFragment: " + (selectedFragment == null));
+                        return true;
+                    case R.id.navigate_jobs:
+                        fragment = bottomNavigationFragments.get("JobsFragment");
+                        fragmentManager.beginTransaction().hide(selectedFragment).show(fragment)
+                                .commitAllowingStateLoss();
+                        selectedFragment = fragment;
+                        return true;
+                    case R.id.navigate_addJob:
+                        fragment = bottomNavigationFragments.get("AddJobFragment");
+                        fragmentManager.beginTransaction().hide(selectedFragment).show(fragment)
+                                .commitAllowingStateLoss();
+                        selectedFragment = fragment;
+                        return true;
+                    case R.id.navigate_messages:
+                        fragment = bottomNavigationFragments.get("MessagesFragment");
+                        fragmentManager.beginTransaction().hide(selectedFragment).show(fragment)
+                                .commitAllowingStateLoss();
+                        selectedFragment = fragment;
+                        return true;
                 }
-
-                if (selectedFragment != null) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, selectedFragment)
-                            .commit();
-                }
-                return true;
             }
         };
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationListener);
@@ -315,10 +338,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     profile_firstName_save_button.setVisibility(View.VISIBLE);
                 }
-                hello_text.setText(
-                        new StringBuilder().append("Hello, ")
-                                .append(profile_firstName_editText.getText().toString())
-                                .append("!").toString());
+                String string = "Hello, " + profile_firstName_editText.getText().toString() + "!";
+                hello_text.setText(string);
             }
 
             @Override
@@ -498,9 +519,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
+    }
 
-        if (firebaseUser != null) {
-            updateProfileInformation();
+    public static void showMyPets() {
+        Fragment fragment;
+        if (fragmentsStack.get("MyPetsFragment").empty()) {
+            fragment = bottomNavigationFragments.get("MyPetsFragment");
+            fragmentManager.beginTransaction().hide(selectedFragment).show(fragment)
+                    .commitAllowingStateLoss();
+            selectedFragment = fragment;
+        } else {
+            fragment =
+                    fragmentsStack.get("MyPetsFragment").peek();
+            fragmentManager.beginTransaction().hide(selectedFragment).show(fragment)
+                    .commitAllowingStateLoss();
+            selectedFragment = fragment;
         }
     }
 
@@ -518,8 +551,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 profile_details.setVisibility(View.GONE);
                 profile_image.setVisibility(View.VISIBLE);
 
-                if (userNeedsUpdate) {
-                    updateUserData();
+                synchronized (this) {
+                    if (userNeedsUpdate) {
+                        updateUserData();
+                    }
                 }
                 break;
             case R.id.signout_button:
@@ -638,13 +673,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.hasChild(firebaseUser.getUid())) {
+                        if (currentUser == null) {
+                            createFragments();
+                        }
+
                         currentUser = snapshot.child(firebaseUser.getUid()).getValue(User.class);
 
                         if (currentUser != null) {
-                            hello_text.setText(
-                                    new StringBuilder().append("Hello, ")
-                                            .append(currentUser.getFirstName())
-                                            .append("!").toString());
+                            String string = "Hello, " + currentUser.getFirstName() + "!";
+                            hello_text.setText(string);
 
                             profile_email_editText.setText(currentUser.getEmail());
                             profile_firstName_editText.setText(currentUser.getFirstName());
@@ -750,5 +787,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
+    }
+
+    public void createFragments() {
+        bottomNavigationFragments = new HashMap<>();
+        fragmentsStack = new HashMap<>();
+        fragmentManager = getSupportFragmentManager();
+
+        bottomNavigationFragments.put("MyPetsFragment", new MyPetsFragment());
+        bottomNavigationFragments.put("MyJobsFragment", new MyJobsFragment());
+        bottomNavigationFragments.put("JobsFragment", new JobsFragment());
+        bottomNavigationFragments.put("AddJobFragment", new AddJobFragment());
+        bottomNavigationFragments.put("MessagesFragment", new MessagesFragment());
+
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container, bottomNavigationFragments.get("MessagesFragment"),
+                        "MessagesFragment").hide(bottomNavigationFragments.get("MessagesFragment"))
+                .commitAllowingStateLoss();
+        fragmentsStack.put("MessagesFragment", new Stack<>());
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container, bottomNavigationFragments.get("AddJobFragment"),
+                        "AddJobFragment").hide(bottomNavigationFragments.get("AddJobFragment"))
+                .commitAllowingStateLoss();
+        fragmentsStack.put("AddJobFragment", new Stack<>());
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container, bottomNavigationFragments.get("JobsFragment"),
+                        "JobsFragment").hide(bottomNavigationFragments.get("JobsFragment"))
+                .commitAllowingStateLoss();
+        fragmentsStack.put("JobsFragment", new Stack<>());
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container, bottomNavigationFragments.get("MyJobsFragment"),
+                        "MyJobsFragment").hide(bottomNavigationFragments.get("MyJobsFragment"))
+                .commitAllowingStateLoss();
+        fragmentsStack.put("MyJobsFragment", new Stack<>());
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container, bottomNavigationFragments.get("MyPetsFragment"),
+                        "MyPetsFragment").hide(bottomNavigationFragments.get("MyPetsFragment"))
+                .commitAllowingStateLoss();
+        fragmentsStack.put("MyPetsFragment", new Stack<>());
+        selectedFragment = bottomNavigationFragments.get("MyPetsFragment");
     }
 }

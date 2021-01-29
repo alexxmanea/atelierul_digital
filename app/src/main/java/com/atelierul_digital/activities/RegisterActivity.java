@@ -1,4 +1,4 @@
-package com.atelierul_digital;
+package com.atelierul_digital.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,6 +18,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.atelierul_digital.R;
+import com.atelierul_digital.entities.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -31,7 +32,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.apache.commons.validator.routines.EmailValidator;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
-    private LinearLayout register_details_linearLayout;
     private TextInputLayout email_layout;
     private TextInputLayout password_layout;
     private TextInputLayout firstName_layout;
@@ -52,9 +52,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private DatabaseReference usersDatabase;
 
     public static boolean isValidEmail(String email) {
-        EmailValidator validator = EmailValidator.getInstance();
-
-        return validator.isValid(email);
+        return EmailValidator.getInstance().isValid(email);
     }
 
     public static boolean isValidfirstName(String firstName) {
@@ -78,7 +76,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         mAuth = FirebaseAuth.getInstance();
         usersDatabase = FirebaseDatabase.getInstance().getReference("users");
 
-        register_details_linearLayout = findViewById(R.id.register_details_linearLayout);
         email_layout = findViewById(R.id.email_layout);
         email_editText = findViewById(R.id.email_editText);
         password_layout = findViewById(R.id.password_layout);
@@ -95,7 +92,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         alreadyRegistered_text = findViewById(R.id.alreadyRegistered_text);
         loading_progressBar = findViewById(R.id.loading_progressBar);
 
-        register_details_linearLayout.setOnClickListener(this);
         email_layout.setOnClickListener(this);
         email_editText.setOnClickListener(this);
         password_layout.setOnClickListener(this);
@@ -111,30 +107,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         register_button.setOnClickListener(this);
         alreadyRegistered_text.setOnClickListener(this);
 
-        String[] cities = getResources().getStringArray(R.array.cityNames);
-        ArrayAdapter<String>
-                adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item,
-                cities);
-        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-
-        city_autoCompleteText.setAdapter(adapter);
-
-        city_autoCompleteText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        email_editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    String enteredText = city_autoCompleteText.getText().toString();
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    ListAdapter listAdapter = city_autoCompleteText.getAdapter();
-                    for (int i = 0; i < listAdapter.getCount(); ++i) {
-                        String temp = listAdapter.getItem(i).toString();
-                        if (enteredText.compareTo(temp) == 0) {
-                            return;
-                        }
-                    }
+            }
 
-                    city_autoCompleteText.setText("");
-                }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                email_editText.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
@@ -155,14 +141,88 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             }
         });
+
+        firstName_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                firstName_editText.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        lastName_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                lastName_editText.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        String[] cities = getResources().getStringArray(R.array.cityNames);
+        ArrayAdapter<String>
+                adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item,
+                cities);
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        city_autoCompleteText.setAdapter(adapter);
+        city_autoCompleteText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    String enteredText = city_autoCompleteText.getText().toString();
+
+                    ListAdapter listAdapter = city_autoCompleteText.getAdapter();
+                    for (int i = 0; i < listAdapter.getCount(); ++i) {
+                        String temp = listAdapter.getItem(i).toString();
+                        if (enteredText.compareTo(temp) == 0) {
+                            return;
+                        }
+                    }
+
+                    city_autoCompleteText.setText("");
+                }
+            }
+        });
+
+        phoneNumber_editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                phoneNumber_editText.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.register_details_linearLayout:
-                break;
             case R.id.email_layout:
             case R.id.email_editText:
                 email_editText.setError(null);

@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.atelierul_digital.entities.Pet;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputLayout;
@@ -19,6 +20,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -29,10 +31,6 @@ public class PetsRecyclerViewAdapter
 
     public PetsRecyclerViewAdapter(List<Pet> mdata) {
         this.mdata = mdata;
-    }
-
-    public List<Pet> getMdata() {
-        return mdata;
     }
 
     public void setMdata(List<Pet> mdata) {
@@ -52,12 +50,11 @@ public class PetsRecyclerViewAdapter
     public void onBindViewHolder(@NonNull RecycleViewHolder recycleViewHolder, int position) {
         Pet pet = mdata.get(position);
 
-        recycleViewHolder.pet_row_image
-                .setImageResource(R.drawable.defautpetprofilepicture_inverted_icon);
         downloadAndSetPetProfileImage(pet.getId(), recycleViewHolder.pet_row_image);
         recycleViewHolder.petName_row_editText.setText(pet.getName());
         recycleViewHolder.petType_row_editText.setText(pet.getType());
-        recycleViewHolder.petAge_row_editText.setText(Integer.toString(pet.getAge()));
+        recycleViewHolder.petAge_row_editText.setText(String.format(Locale.getDefault(), "%d",
+                pet.getAge()));
         recycleViewHolder.petGender_row_editText.setText(pet.getGender());
         recycleViewHolder.petDescription_row_editText.setText(pet.getDescription());
     }
@@ -81,6 +78,7 @@ public class PetsRecyclerViewAdapter
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
+                profile_image.setImageResource(R.drawable.defautpetprofilepicture_inverted_icon);
             }
         });
     }

@@ -1,4 +1,4 @@
-package com.atelierul_digital;
+package com.atelierul_digital.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.atelierul_digital.R;
 
 public class MyJobsFragment extends Fragment {
     @Nullable
